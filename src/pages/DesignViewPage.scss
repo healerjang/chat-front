@@ -1,0 +1,11 @@
+.designViewPage {
+  overflow: hidden;
+}
+
+.designViewPage__mainView {
+  align-items: stretch;
+  justify-content: stretch;
+  min-width: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

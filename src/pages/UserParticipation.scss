@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   display: flex;
+  overflow: hidden;
 }
 
 .mainView {
@@ -18,4 +19,29 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 0;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.thinkControl {
+  display: flex;
+  gap: 8px;
+
+  button {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 6px 10px;
+    color: #dfe7ff;
+    background: rgba(23, 26, 34, 0.9);
+    cursor: pointer;
+    font-size: 0.78rem;
+
+    &:hover,
+    &:focus {
+      color: #ffffff;
+      border-color: rgba(132, 170, 255, 0.5);
+      background: rgba(49, 94, 231, 0.28);
+    }
+  }
 }

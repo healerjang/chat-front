@@ -1,12 +1,21 @@
 import { create } from "zustand";
-import NewChat from "@/pages/NewChat.tsx";
-import type { ComponentType } from "react";
 
-export const PAGE_COMPONENT_MAP = {
-    newChat: NewChat,
-} satisfies Record<string, ComponentType>;
+export type PageName =
+    | "newChat"
+    | "onlyModel"
+    | "userParticipation"
+    | "designView"
+    | "testOnlyModel"
+    | "testUserParticipation";
 
-export type PageName = keyof typeof PAGE_COMPONENT_MAP;
+export const PAGE_LABEL_MAP = {
+    newChat: "New Chat",
+    onlyModel: "Only Model",
+    userParticipation: "User Participation",
+    designView: "Design View",
+    testOnlyModel: "Test Only Model",
+    testUserParticipation: "Test User Participation",
+} satisfies Record<PageName, string>;
 
 interface PageStore {
     pageName: PageName;

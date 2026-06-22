@@ -1,4 +1,5 @@
-import { PAGE_COMPONENT_MAP, usePageStore } from "@/stores/usePageStore.tsx";
+import { usePageStore } from "@/stores/usePageStore.tsx";
+import { PAGE_COMPONENT_MAP } from "@/pages/pageRegistry.tsx";
 
 function App() {
     const pageName = usePageStore(state => state.pageName);

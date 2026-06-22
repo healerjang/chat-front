@@ -8,7 +8,7 @@ const NewChat = () => {
             <SideBar></SideBar>
             <div className="mainView">
                 <div className="remainRegion"/>
-                <UserChat></UserChat>
+                <UserChat variant="composer"></UserChat>
                 <div className="remainRegion"/>
             </div>
         </div>
