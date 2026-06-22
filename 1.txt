@@ -1,0 +1,155 @@
+현재 프로젝트는 여러 AI Chat 프로젝트에서 공통으로 사용할 수 있는 React 기반 string viewing UI 프로젝트다.
+
+목표는 Markdown 문법이 포함되거나 포함되지 않은 모든 string을 일관된 디자인으로 화면에 표시하는 것이다.
+
+## 핵심 설계
+
+### Page
+
+Page는 다음 3종류가 있다.
+
+1. `NewChat`
+
+   * 초기 화면
+   * 기존 구조 유지
+
+2. `OnlyModelPage`
+
+   * 모델들끼리만 대화하는 AI Chat 프로젝트 대상
+   * `ContentBlock[]` 형태의 대화 목록을 가진다.
+   * 각 `ContentBlock`은 좌우로 번갈아 배치된다.
+
+3. `UserParticipationPage`
+
+   * 유저도 대화에 참여하는 AI Chat 프로젝트 대상
+   * `ContentBlock[]` 형태의 대화 목록을 가진다.
+   * 데이터에는 반드시 `role: "model" | "user"`가 포함되어야 한다.
+   * `role === "model"`이면 좌측, `role === "user"`이면 우측에 배치된다.
+
+---
+
+## 핵심 컴포넌트: ContentBlock
+
+`ContentBlock`은 실제 string viewing의 핵심 컴포넌트다.
+
+`ContentBlock`은 다음 역할을 가진다.
+
+1. 내부적으로 viewing할 string을 가진다.
+2. Markdown 문법이 있으면 Markdown 기준으로 렌더링하고, 없으면 일반 string으로 렌더링한다.
+3. 모델 아이콘 이미지 경로를 받을 수 있다.
+
+   * 모델이 출력한 string 옆에 간단한 아이콘으로 표시한다.
+4. 원본 데이터 object를 받을 수 있다.
+
+   * 일반적으로 `{ key: value }` 형태의 dictionary/object이다.
+5. 외부에서 주입된 control component를 상단에 렌더링할 수 있다.
+6. control component의 클릭, hover, hold 등의 조작에 따라 현재 viewing string을 동적으로 변경할 수 있어야 한다.
+
+---
+
+## 예상 데이터 구조
+
+### OnlyModelPage용 데이터
+
+```ts
+interface OnlyModelContentData {
+  content: string;
+  modelIconPath?: string;
+  rawData?: Record<string, unknown>;
+}
+```
+
+### UserParticipationPage용 데이터
+
+```ts
+type ChatRole = "model" | "user";
+
+interface UserParticipationContentData {
+  role: ChatRole;
+  content: string;
+  think?: string;
+  modelIconPath?: string;
+  rawData?: Record<string, unknown>;
+}
+```
+
+---
+
+## 동작 파이프라인
+
+1. 사용자가 page를 선택한다.
+2. 선택된 page에 다음 요소를 주입한다.
+
+   * `ContentBlock`에 전달될 control component
+   * 데이터를 기준으로 viewing string을 결정하는 함수
+   * 다음 데이터를 추가하는 함수
+3. page는 다음 데이터를 추가하는 함수를 통해 데이터를 받으면, 해당 데이터를 `ContentBlock`에 주입해서 목록에 추가한다.
+4. `ContentBlock`은 기본적으로 `content`를 렌더링한다.
+5. control component의 조작이 발생하면 `ContentBlock`은 자신의 viewing string을 동적으로 변경한 뒤 다시 렌더링한다.
+
+---
+
+## 예시 A: OnlyModel Chat
+
+단순 string만 주고받는 프로젝트다.
+
+1. `OnlyModelPage` 선택
+2. 데이터 형식은 `{ content: string }`
+3. control component는 필요 없으므로 `null` 또는 `undefined`
+4. 다음 데이터가 추가될 때마다 page는 새 `ContentBlock`을 생성하여 추가한다.
+5. 각 `ContentBlock`은 좌우로 번갈아 배치된다.
+
+---
+
+## 예시 B: UserParticipation Chat
+
+string과 think를 함께 표시해야 하는 프로젝트다.
+
+1. `UserParticipationPage` 선택
+2. 데이터 형식은 `{ role: "model" | "user", content: string, think?: string }`
+3. control component는 hover/click/hold 등의 조작 시 `think` string을 viewing string으로 전환할 수 있어야 한다.
+4. 다음 데이터가 추가될 때마다 page는 새 `ContentBlock`을 생성하여 추가한다.
+5. `role === "model"`이면 좌측, `role === "user"`이면 우측에 배치한다.
+
+---
+
+## 구현 목표
+
+다음 파일과 컴포넌트를 완성해라.
+
+1. `OnlyModelPage`
+2. `UserParticipationPage`
+3. `UserChat`
+4. `ContentBlock`
+
+---
+
+## 구현 규칙
+
+### 파일 구조
+
+1. 현재 프로젝트의 기존 설계 규칙을 최대한 따를 것.
+2. 스타일 파일은 `.scss`로 작성할 것.
+3. `.scss` 파일은 해당 스타일을 사용하는 root component와 동일한 위치에 둘 것.
+4. `SideBar`처럼 하위 재사용 컴포넌트가 많아지는 경우에는 별도 directory를 만들어 관련 파일을 한 곳에 모을 것.
+
+---
+
+## 디자인 규칙
+
+1. 일반적인 채팅 앱 UI 구조를 따를 것.
+2. 전체 색감은 기존 `mainView` 클래스의 어둡고 파란 gradient 색감을 기준으로 맞출 것.
+3. 전체 채팅 영역은 `mainView`의 gradient 배경이 드러나도록 하고, 입력창·헤더·패널 같은 분리된 UI 요소는 짙은 회색 기반의 modern dark UI로 구성할 것.
+4. 메시지 bubble은 좌우 배치가 명확히 구분되어야 한다.
+5. Markdown 렌더링 결과도 디자인이 깨지지 않도록 `p`, `code`, `pre`, `ul`, `ol`, `blockquote`, `a` 등의 기본 스타일을 지정할 것.
+
+---
+
+## 추가 조건
+
+1. TypeScript 타입 안정성을 지킬 것.
+2. 가능한 한 props/interface를 명확히 분리할 것.
+3. `ContentBlock`은 특정 page에 종속되지 않는 재사용 가능한 컴포넌트로 만들 것.
+4. control component가 없는 경우에도 정상적으로 렌더링되어야 한다.
+5. `UserChat`은 채팅 앱의 기본 레이아웃을 완성하는 것을 목표로 한다.
+6. 현재 입력 구조는 확정된 것이 아니므로, 구현 과정에서 더 적절한 props/interface/store 구조가 있다면 TypeScript 타입 안정성을 유지하는 선에서 개선해도 된다.

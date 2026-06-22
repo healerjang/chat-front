@@ -1,0 +1,25 @@
+.main {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.mainView {
+  background: linear-gradient(
+                  135deg,
+                  #1e1e2f 0%,
+                  #2a5cff 50%,
+                  #9b4dff 100%
+  );
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.remainRegion {
+  flex: 1;
+}
