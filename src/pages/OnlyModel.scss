@@ -23,3 +23,27 @@
   padding: 24px;
   box-sizing: border-box;
 }
+
+.onlyModelViewControl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  button {
+    height: 30px;
+    border: 1px solid rgba(180, 201, 255, 0.22);
+    border-radius: 8px;
+    padding: 0 10px;
+    color: #dce6ff;
+    background: rgba(34, 39, 54, 0.86);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      color: #ffffff;
+      border-color: rgba(180, 201, 255, 0.46);
+      background: rgba(58, 74, 130, 0.82);
+    }
+  }
+}

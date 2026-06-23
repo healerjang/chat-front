@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 export type PageName =
+    | "survivalDebate"
     | "newChat"
     | "onlyModel"
     | "userParticipation"
@@ -9,6 +10,7 @@ export type PageName =
     | "testUserParticipation";
 
 export const PAGE_LABEL_MAP = {
+    survivalDebate: "Survival Debate",
     newChat: "New Chat",
     onlyModel: "Only Model",
     userParticipation: "User Participation",
@@ -24,7 +26,7 @@ interface PageStore {
 }
 
 export const usePageStore = create<PageStore>((set) => ({
-    pageName: "newChat",
+    pageName: "survivalDebate",
     setPage: (pageName) => set({ pageName }),
-    initialState: () => set({ pageName: "newChat" }),
+    initialState: () => set({ pageName: "survivalDebate" }),
 }));

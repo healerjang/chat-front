@@ -1,0 +1,94 @@
+.survivalDebate {
+  background: #11141d;
+}
+
+.survivalDebate__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #151925 0%, #22356f 52%, #43236d 100%);
+}
+
+.survivalDebate__toolbar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  color: #f8faff;
+  background: rgba(15, 18, 28, 0.88);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+
+  h1 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin: 5px 0 0;
+    color: #aeb8d1;
+    font-size: 0.88rem;
+  }
+}
+
+.survivalDebate__actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  button {
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 0 14px;
+    color: #ffffff;
+    background: rgba(59, 97, 224, 0.84);
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: rgba(78, 119, 245, 0.94);
+    }
+
+    &:disabled {
+      cursor: default;
+      color: #8f98ad;
+      background: rgba(58, 63, 74, 0.72);
+    }
+  }
+}
+
+.survivalDebate {
+  > .survivalDebate__main > .main {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+
+  .mainView {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  .userChat__inputPanel {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .survivalDebate__toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .survivalDebate__actions {
+    width: 100%;
+
+    button {
+      flex: 1;
+    }
+  }
+}
